@@ -1,0 +1,154 @@
+t <- proc.time()
+a="20+15-30/(100+20-12*10/4)*5"
+b=c()
+b2=c()
+b3=c()
+b4=c()
+b5=c()
+bparentesis=c()
+bparentesis1=c()
+bparentesis2=c()
+bparentesis3=c()
+bparentesis4=c()
+bparentesis5=c()
+k=1;
+j=1;
+p=1;
+cont=2
+positionparentesis=0
+#Metodos
+Dividiendo<-function(b){
+  b1=c()
+  for(i in 1:length(b)){
+    if(i%%2==0){
+      if(b[i]=="/"){
+        b[i-1]=as.double(b[i-1])/as.double(b[i+1])
+        b[i]=NaN
+        b[i+1]=NaN
+      }
+    }
+  }
+  k=1
+  for(i in 1:length(b)){
+    if(b[i]!=NaN){
+      b1[k]=b[i]
+      k=k+1
+    }
+  }
+  b1
+}
+Multiplicando<-function(b){
+  b1=c()
+  for(i in 1:length(b)){
+    if(i%%2==0){
+      if(b[i]=="*"){
+        b[i-1]=as.double(b[i-1])*as.double(b[i+1])
+        b[i]=NaN
+        b[i+1]=NaN
+      }
+    }
+  }
+  k=1
+  for(i in 1:length(b)){
+    if(b[i]!=NaN){
+      b1[k]=b[i]
+      k=k+1
+    }
+  }
+  b1
+}
+Sumando<-function(b){
+  b1=c()
+  for(i in 1:length(b)){
+    if(i%%2==0){
+      if(b[i]=="+"){
+        b[i-1]=as.double(b[i-1])+as.double(b[i+1])
+        b[i]=NaN
+        b[i+1]=NaN
+      }
+    }
+  }
+  k=1
+  for(i in 1:length(b)){
+    if(b[i]!=NaN){
+      b1[k]=b[i]
+      k=k+1
+    }
+  }
+  b1
+}
+Restando<-function(b){
+  b1=c()
+  for(i in 1:length(b)){
+    if(i%%2==0){
+      if(b[i]=="-"){
+        b[i-1]=as.double(b[i-1])-as.double(b[i+1])
+        b[i]=NaN
+        b[i+1]=NaN
+      }
+    }
+  }
+  k=1
+  for(i in 1:length(b)){
+    if(b[i]!=NaN){
+      b1[k]=b[i]
+      k=k+1
+    }
+  }
+  b1
+}
+for(i in 1:nchar(a)){
+  if(substring(a,i,i)=="("){
+    cont=cont-1
+  }
+  if(substring(a,i,i)==")"){
+    cont=cont+1
+  }
+  if(substring(a,i,i)!="+"&&substring(a,i,i)!="-"&&substring(a,i,i)!="*"&&substring(a,i,i)!="/"){
+  }else{
+    if(cont==2){
+      b[k]=substring(a,j,i-1)
+      k=k+1;
+      b[k]=substring(a,i,i)
+      k=k+1
+      j=i+1
+    }
+  }
+  if(i==nchar(a)){
+    b[k]=substring(a,j,i)
+  }
+}
+for(i in 1:length(b)){
+  if(substring(b[i],1,1)=="("){
+    bparentesis[1]=substring(b[i],2,(nchar(b[i])-1))
+    positionparentesis=i
+  }
+}
+k=1
+j=1
+for(i in 1:nchar(bparentesis[1])){
+  if(substring(bparentesis[1],i,i)!="+"&&substring(bparentesis[1],i,i)!="-"&&substring(bparentesis[1],i,i)!="*"&&substring(bparentesis[1],i,i)!="/"){
+  }else{
+    bparentesis1[k]=substring(bparentesis[1],j,i-1)
+    k=k+1;
+    bparentesis1[k]=substring(bparentesis[1],i,i)
+    k=k+1
+    j=i+1
+  }
+  if(i==nchar(bparentesis[1])){
+    bparentesis1[k]=substring(bparentesis[1],j,i)
+  }
+}
+bparentesis2=Dividiendo(bparentesis1)
+bparentesis3=Multiplicando(bparentesis2)
+bparentesis4=Sumando(bparentesis3)
+bparentesis5=Restando(bparentesis4)
+bparentesis5
+b[positionparentesis]=bparentesis5[1]
+b2=Dividiendo(b)
+b3=Multiplicando(b2)
+b4=Sumando(b3)
+b5=Restando(b4)
+b5
+proc.time()-t 
+#Sin optimizar pesa 2.85 KB
