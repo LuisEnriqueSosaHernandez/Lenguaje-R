@@ -143,7 +143,6 @@ bparentesis2=Dividiendo(bparentesis1)
 bparentesis3=Multiplicando(bparentesis2)
 bparentesis4=Sumando(bparentesis3)
 bparentesis5=Restando(bparentesis4)
-bparentesis5
 b[positionparentesis]=bparentesis5[1]
 b2=Dividiendo(b)
 b3=Multiplicando(b2)
